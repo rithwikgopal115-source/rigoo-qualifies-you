@@ -13,7 +13,13 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        mono: ["Space Mono", "ui-monospace", "monospace"],
+        sans: ["IBM Plex Sans", "system-ui", "sans-serif"],
+      },
       colors: {
+        "rigoo-accent": "hsl(var(--rigoo-accent))",
+        "rigoo-tint": "hsl(var(--rigoo-option-tint))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
