@@ -45,7 +45,7 @@ const getSections = (): Section[] => {
 export const MetroGallery = () => {
   const sections = getSections();
   const [open, setOpen] = useState<Record<string, boolean>>(
-    Object.fromEntries(sections.map((s) => [s.label, true]))
+    Object.fromEntries(sections.map((s) => [s.label, false]))
   );
 
   const toggle = (label: string) =>
