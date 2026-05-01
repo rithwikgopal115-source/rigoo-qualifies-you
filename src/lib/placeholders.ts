@@ -1,38 +1,33 @@
-// SWAP-IN CATALOG — replace these values with your real assets/links.
-// Every image renders as a labeled placeholder box until you set the path.
+// SWAP-IN CATALOG — replace with real assets/links later.
 
 export const ASSETS = {
-  logo: "", // rigorawmedia-logo.svg
-  bgDark: "", // [dark nature bg].png
-  bgLight: "", // [light nature bg].png
-  personalPhoto: "", // your photo
-
-  // Work proof
-  problemChain: "", // problem-chain-layout.png
-  conditionsDeckDoc: "", // conditions-deck-doc.png
-  definingAvatarSlide: "", // defining-avatar-slide.png
-  whatsappReactions: "", // whatsapp-reactions.png
-  emailSequence: "", // email-sequence-sample.png
-  vslMansagar: "", // vsl-framework-mansagar.png
-  conditionsDeckMansagar: "", // conditions-deck-mansagar.png
-  creativeBriefIcp: "", // creative-brief-icp.png
-  automate90Crm: "", // automate90-crm-screenshot.png
-  automate90Pipeline: "", // automate90-pipeline.png
-
-  // Personal
-  notionLogs: "", // notion-workday-logs.png
-  tallyNotebook: "", // tally-notebook.png
+  logo: "",
+  bgDark: "",
+  bgLight: "",
+  personalPhoto: "",
+  problemChain: "",
+  conditionsDeckDoc: "",
+  definingAvatarSlide: "",
+  whatsappReactions: "",
+  emailSequence: "",
+  vslMansagar: "",
+  conditionsDeckMansagar: "",
+  creativeBriefIcp: "",
+  automate90Crm: "",
+  automate90Pipeline: "",
+  iaWorkflow: "",
+  notionLogs: "",
+  tallyNotebook: "",
 };
 
-export const LOOMS = {
-  freelancer: "", // https://www.loom.com/embed/...
+export const LOOMS: Record<string, string> = {
+  freelancer: "",
   agency: "",
   cofounder: "",
-  ia: "", // Influence Accelerator loom
 };
 
 export const LINKS = {
-  upwork: "#", // upwork proposal link
-  calendly: "#", // calendly 30-min booking
-  whatsapp: "#", // wa.me/...
+  calendly: "#",        // agency CTA
+  whatsapp: "https://wa.me/919999999999", // cofounder + personal CTA
+  email: "mailto:hello@rigorawmedia.com", // freelancer CTA
 };
