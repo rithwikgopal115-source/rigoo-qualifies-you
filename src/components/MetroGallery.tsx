@@ -25,22 +25,119 @@ const TILES: Tile[] = [
   { type: "image", size: "3x1", tag: "IA 3.0 — AI CONTENT SYSTEM", title: "influence accelerator", caption: "full-stack agentic content distribution. research layer → distribution architecture → CMF engine.", file: "n8n-workflow.png" },
 ];
 
+// Group tiles by header
+type Section = { label: string; tiles: Tile[] };
+
+const getSections = (): Section[] => {
+  const sections: Section[] = [];
+  let current: Section | null = null;
+  for (const tile of TILES) {
+    if (tile.type === "header") {
+      current = { label: tile.label, tiles: [] };
+      sections.push(current);
+    } else if (current) {
+      current.tiles.push(tile);
+    }
+  }
+  return sections;
+};
+
 export const MetroGallery = () => {
+  const sections = getSections();
+  const [open, setOpen] = useState<Record<string, boolean>>(
+    Object.fromEntries(sections.map((s) => [s.label, true]))
+  );
+
+  const toggle = (label: string) =>
+    setOpen((prev) => ({ ...prev, [label]: !prev[label] }));
+
   return (
     <div className="overflow-y-auto h-full pt-2 pb-12 pr-2">
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gridAutoRows: "minmax(110px, auto)",
-          gap: 6,
-          width: "100%",
-        }}
-      >
-        {TILES.map((tile, i) => (
-          <TileEl key={i} tile={tile} idx={i} />
-        ))}
-      </div>
+      {sections.map((section, si) => {
+        const isOpen = open[section.label];
+        return (
+          <div key={section.label} style={{ marginBottom: isOpen ? 24 : 0 }}>
+            {/* Collapsible header — same ">" style as OptionLine */}
+            <div
+              onClick={() => toggle(section.label)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "16px 0 12px 0",
+                borderBottom: isOpen ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(255,255,255,0.04)",
+                marginBottom: isOpen ? 12 : 0,
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+            >
+              {/* ">" chevron — rotates when open */}
+              <span
+                style={{
+                  fontFamily: "Arial",
+                  fontSize: 14,
+                  fontWeight: 200,
+                  color: isOpen ? "#ff4242" : "rgba(255,255,255,0.25)",
+                  transition: "color 0.3s, transform 0.3s",
+                  display: "inline-block",
+                  transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
+                  lineHeight: 1,
+                  minWidth: 12,
+                }}
+              >
+                {">"}
+              </span>
+
+              <div
+                style={{
+                  fontFamily: "Arial",
+                  fontSize: 11,
+                  fontWeight: 300,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: isOpen ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.3)",
+                  transition: "color 0.3s",
+                  flex: 1,
+                }}
+              >
+                {section.label}
+              </div>
+
+              {/* tile count badge */}
+              <span
+                style={{
+                  fontFamily: "Arial",
+                  fontSize: 9,
+                  letterSpacing: "0.1em",
+                  color: "rgba(255,66,66,0.5)",
+                  paddingRight: 4,
+                }}
+              >
+                {section.tiles.length}
+              </span>
+            </div>
+
+            {/* Tiles — collapse/expand */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gridAutoRows: "minmax(110px, auto)",
+                gap: 6,
+                width: "100%",
+                overflow: "hidden",
+                maxHeight: isOpen ? "2000px" : "0px",
+                opacity: isOpen ? 1 : 0,
+                transition: "max-height 0.45s ease, opacity 0.3s ease",
+              }}
+            >
+              {section.tiles.map((tile, i) => (
+                <TileEl key={i} tile={tile} idx={si * 10 + i} />
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -48,51 +145,14 @@ export const MetroGallery = () => {
 const TileEl = ({ tile, idx }: { tile: Tile; idx: number }) => {
   const [hovered, setHovered] = useState(false);
 
-  if (tile.type === "header") {
-    return (
-      <div
-        style={{
-          gridColumn: "span 4",
-          padding: "16px 0 8px 0",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-          marginBottom: 4,
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          animation: `fadeSlideUp 0.5s ease ${idx * 60}ms both`,
-        }}
-      >
-        <div style={{ width: 6, height: 6, background: "#ff4242" }} />
-        <div
-          style={{
-            fontFamily: "Arial",
-            fontSize: 10,
-            fontWeight: 300,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.35)",
-          }}
-        >
-          {tile.label}
-        </div>
-      </div>
-    );
-  }
-
-  const [colsStr, rowsStr] = tile.size.split("x");
-  const cols = Number(colsStr);
-  const rows = Number(rowsStr);
-  const gridCol = `span ${cols}`;
-  const gridRow = `span ${rows}`;
-
   if (tile.type === "stat") {
     return (
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
-          gridColumn: gridCol,
-          gridRow: gridRow,
+          gridColumn: `span ${tile.size.split("x")[0]}`,
+          gridRow: `span ${tile.size.split("x")[1]}`,
           background: hovered ? "#ff4242" : "rgba(255,66,66,0.12)",
           border: "1px solid rgba(255,66,66,0.3)",
           padding: 16,
@@ -133,13 +193,16 @@ const TileEl = ({ tile, idx }: { tile: Tile; idx: number }) => {
     );
   }
 
+  const cols = Number(tile.size.split("x")[0]);
+  const rows = Number(tile.size.split("x")[1]);
+
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        gridColumn: gridCol,
-        gridRow: gridRow,
+        gridColumn: `span ${cols}`,
+        gridRow: `span ${rows}`,
         background: hovered ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.03)",
         border: hovered ? "1px solid rgba(255,66,66,0.35)" : "1px solid rgba(255,255,255,0.07)",
         overflow: "hidden",
