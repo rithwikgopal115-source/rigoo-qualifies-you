@@ -50,7 +50,7 @@ const Index = () => {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: "110px clamp(28px, 6vw, 96px) 0",
+          padding: "110px clamp(16px, 4vw, 96px) 0",
           overflow: "hidden",
           position: "relative",
           zIndex: 1,
