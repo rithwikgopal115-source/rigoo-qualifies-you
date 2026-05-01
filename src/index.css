@@ -81,3 +81,26 @@
   .anim-cursor { animation: cursorBlink 1s infinite; }
   .anim-pulse-once { animation: pulse 2s ease 1; }
 }
+
+
+@media (max-width: 767px) {
+  .pro-layout {
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  .flow-col {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    min-height: 0 !important;
+  }
+  .gallery-col {
+    flex: none !important;
+    width: 100% !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+}
