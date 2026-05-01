@@ -279,10 +279,8 @@ export const ConversationalFlow = ({ flowActivated, onFlowActivated, onFlowCompl
     >
       {/* Hero */}
       <div className="anim-fade-up" style={{ padding: "32px 0 36px 0" }}>
-        {heroLine("most portfolios are a résumé", heroPrimary, 4)}
-        {heroLine("with a coat of paint.", "#ff4242", 10)}
-        {heroLine("this one", heroPrimary, 4)}
-        {heroLine("qualifies you.", "#ff4242", 8)}
+          {heroLine("input: your problem.", heroPrimary, 4)}
+          {heroLine("output: solved.", "#ff4242", 10)}
         <div
           style={{
             fontFamily: "Arial",
