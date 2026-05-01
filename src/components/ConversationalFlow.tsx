@@ -444,15 +444,15 @@ export const ConversationalFlow = ({ flowActivated, onFlowActivated, onFlowCompl
             >
               RIGOO'S ASSESSMENT
             </div>
-            <div
-              className="font-mono"
-              style={{
-                fontSize: 12,
-                lineHeight: 1.9,
-                color: "#0a0a0a",
-                whiteSpace: "pre-wrap",
-              }}
-            >
+         <div
+            style={{
+              fontFamily: "Arial",
+              fontSize: 12,
+              lineHeight: 1.9,
+              color: "#0a0a0a",
+              whiteSpace: "pre-wrap",
+            }}
+          >
               {aiText}
               {!streamDone && (
                 <span className="anim-cursor" style={{ color: "#ff4242", marginLeft: 2 }}>█</span>
