@@ -57,39 +57,68 @@ const Index = () => {
         }}
       >
         {tab === "PROFESSIONAL" ? (
-          <div style={{ display: "flex", gap: 48, flex: 1, overflow: "hidden" }}>
-            {/* Left: conversational flow */}
-            <div
-              style={{
-                flex: "0 0 440px",
-                maxWidth: 480,
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden",
-              }}
-            >
-              <ConversationalFlow
-                key={flowKey}
-                flowActivated={flowActivated}
-                onFlowActivated={handleFlowActivated}
-                onFlowComplete={handleFlowComplete}
-              />
+            <div className="pro-layout" style={{ display: "flex", gap: 48, flex: 1, overflow: "hidden" }}>
+              {/* Left: conversational flow */}
+              <div
+                className="flow-col"
+                style={{
+                  flex: "0 0 440px",
+                  maxWidth: 480,
+                  display: "flex",
+                  flexDirection: "column",
+                  overflow: "hidden",
+                }}
+              >
+                <ConversationalFlow
+                  key={flowKey}
+                  flowActivated={flowActivated}
+                  onFlowActivated={handleFlowActivated}
+                  onFlowComplete={handleFlowComplete}
+                />
+              </div>
+  
+              {/* Right: metro gallery, fades when flow activated */}
+              <div
+                className="gallery-col"
+                style={{
+                  flex: 1,
+                  overflow: "hidden",
+                  opacity: flowActivated ? 0 : 1,
+                  transform: flowActivated ? "translateX(24px)" : "translateX(0)",
+                  transition: "opacity 0.7s ease, transform 0.7s ease",
+                  pointerEvents: flowActivated ? "none" : "auto",
+                }}
+              >
+                {/* Mobile-only proof of work heading */}
+                <div
+                  className="md:hidden"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    paddingBottom: 16,
+                    paddingTop: 8,
+                    marginBottom: 16,
+                    borderBottom: "1px solid rgba(255,255,255,0.08)",
+                  }}
+                >
+                  <div style={{ width: 6, height: 6, background: "#ff4242", flexShrink: 0 }} />
+                  <div
+                    style={{
+                      fontFamily: "Arial",
+                      fontSize: 10,
+                      fontWeight: 300,
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      color: "rgba(255,255,255,0.35)",
+                    }}
+                  >
+                    proof of work
+                  </div>
+                </div>
+                <MetroGallery />
+              </div>
             </div>
-
-            {/* Right: metro gallery, fades when flow activated */}
-            <div
-              style={{
-                flex: 1,
-                overflow: "hidden",
-                opacity: flowActivated ? 0 : 1,
-                transform: flowActivated ? "translateX(24px)" : "translateX(0)",
-                transition: "opacity 0.7s ease, transform 0.7s ease",
-                pointerEvents: flowActivated ? "none" : "auto",
-              }}
-            >
-              <MetroGallery />
-            </div>
-          </div>
         ) : (
           <div style={{ flex: 1, overflow: "auto", maxWidth: 720, margin: "0 auto", width: "100%" }}>
             <PersonalTab />
