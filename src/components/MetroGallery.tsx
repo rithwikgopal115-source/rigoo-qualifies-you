@@ -26,7 +26,7 @@ const TILES: Tile[] = [
 ];
 
 // Group tiles by header
-type Section = { label: string; tiles: Tile[] };
+type Section = { label: string; tiles: Exclude<Tile, { type: "header" }>[] };
 
 const getSections = (): Section[] => {
   const sections: Section[] = [];
@@ -142,7 +142,7 @@ export const MetroGallery = () => {
   );
 };
 
-const TileEl = ({ tile, idx }: { tile: Tile; idx: number }) => {
+const TileEl = ({ tile, idx }: { tile: Exclude<Tile, { type: "header" }>; idx: number }) => {
   const [hovered, setHovered] = useState(false);
 
   if (tile.type === "stat") {
