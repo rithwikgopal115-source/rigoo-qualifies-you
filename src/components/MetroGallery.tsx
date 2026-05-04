@@ -26,7 +26,7 @@ const TILES: Tile[] = [
 ];
 
 // Group tiles by header
-type Section = { label: string; tiles: Tile[] };
+type Section = { label: string; tiles: Exclude<Tile, { type: "header" }>[] };
 
 const getSections = (): Section[] => {
   const sections: Section[] = [];
