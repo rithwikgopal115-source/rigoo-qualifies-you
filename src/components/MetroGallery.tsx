@@ -142,7 +142,7 @@ export const MetroGallery = () => {
   );
 };
 
-const TileEl = ({ tile, idx }: { tile: Tile; idx: number }) => {
+const TileEl = ({ tile, idx }: { tile: Exclude<Tile, { type: "header" }>; idx: number }) => {
   const [hovered, setHovered] = useState(false);
 
   if (tile.type === "stat") {
