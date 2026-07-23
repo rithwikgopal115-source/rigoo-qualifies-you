@@ -1,86 +1,106 @@
 import { useState, useEffect } from "react";
 
 export const HeroSection = () => {
-  const words = ["AI automations", "software", "agentic solutions"];
-  const [wordIndex, setWordIndex] = useState(0);
+  const firstWords = ["AI automations", "software", "agentic solutions"];
+  const secondWords = ["safe", "scalable", "personalized", "high touch", "seamless"];
+  const [firstIndex, setFirstIndex] = useState(0);
+  const [secondIndex, setSecondIndex] = useState(0);
+  const [isEyebrow, setIsEyebrow] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
-    }, 2500);
-    return () => clearInterval(interval);
+    const timer = setTimeout(() => {
+      setIsEyebrow(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    const timer = setTimeout(() => {
+      interval = setInterval(() => {
+        setFirstIndex((prev) => (prev + 1) % firstWords.length);
+        setSecondIndex((prev) => (prev + 1) % secondWords.length);
+      }, 2500);
+    }, 4000);
+    return () => {
+      clearTimeout(timer);
+      if (interval) clearInterval(interval);
+    };
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col justify-center relative">
-      <div className="max-w-4xl" style={{ padding: "32px 0 0 0" }}>
-        <div
-          className="font-serif"
+    <div className="w-full flex flex-col items-center justify-center relative min-h-[60vh] py-12">
+      <div className="max-w-5xl mx-auto text-center flex flex-col items-center w-full">
+        
+        <div 
+          className={`font-sans font-bold transition-all duration-1000 ease-in-out ${
+            isEyebrow 
+              ? "uppercase tracking-[0.2em] text-white/70 mb-6" 
+              : "tracking-tight text-white mb-0"
+          }`}
           style={{
-            fontSize: "clamp(32px, 4.5vw, 64px)",
-            fontWeight: 400,
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
-            color: "#ffffff",
-            marginBottom: 24,
-            textShadow: "0 0 40px rgba(255,255,255,0.4), 0 0 10px rgba(255,255,255,0.2)",
+            fontSize: isEyebrow ? "clamp(12px, 1.2vw, 16px)" : "clamp(36px, 5vw, 68px)",
+            opacity: 0, 
+            animation: 'fadeSlideUp 1s ease forwards', 
+            animationDelay: '0.2s',
+            textShadow: isEyebrow ? "none" : "0 0 40px rgba(255,255,255,0.3)",
           }}
         >
-          <div style={{ opacity: 0, animation: 'fadeSlideUp 1s ease forwards', animationDelay: '0.2s' }}>
-            You build complex agencies and ERPs.
-          </div>
-          <div style={{ opacity: 0, animation: 'fadeSlideUp 1s ease forwards', animationDelay: '1.2s', marginTop: '12px' }}>
-            I build the <span key={wordIndex} className="inline-block font-bold text-white anim-fade-up" style={{ borderBottom: "4px solid #ff7a00" }}>{words[wordIndex]}</span> that make them scale.
-          </div>
+          You build complex agencies and ERPs.
         </div>
         
-        <div
+        <h1
+          className="font-sans font-bold tracking-tight text-white w-full"
+          style={{
+            fontSize: "clamp(36px, 5vw, 68px)",
+            lineHeight: 1.1,
+            marginBottom: "32px",
+            textShadow: "0 0 40px rgba(255,255,255,0.3)",
+          }}
+        >
+          <div style={{ opacity: 0, animation: 'fadeSlideUp 1s ease forwards', animationDelay: '3.0s' }}>
+            I build the <span key={`first-${firstIndex}`} className="inline-block text-white/90 anim-fade-up px-2">{firstWords[firstIndex]}</span><br/> that make them <span key={`second-${secondIndex}`} className="inline-block text-white/90 anim-fade-up px-2">{secondWords[secondIndex]}</span>.
+          </div>
+        </h1>
+        
+        <p
+          className="font-sans"
           style={{
             opacity: 0,
             animation: 'fadeSlideUp 1s ease forwards',
-            animationDelay: '2.2s',
-            fontFamily: "Inter, Arial, sans-serif",
+            animationDelay: '4.0s',
             fontSize: "clamp(16px, 1.5vw, 20px)",
-            fontWeight: 300,
+            fontWeight: 400,
             color: "rgba(255, 255, 255, 0.9)",
             lineHeight: 1.6,
-            marginBottom: 48,
-            maxWidth: "800px",
-            textShadow: "0 0 20px rgba(255,255,255,0.3)",
+            marginBottom: "48px",
+            maxWidth: "700px",
           }}
         >
           I'm an 18-year-old generalist obsessed with systems thinking. I don't just execute tasks; I architect solutions for cash flow and operational bottlenecks.
-        </div>
+        </p>
         
-        <div style={{ opacity: 0, animation: 'fadeSlideUp 1s ease forwards', animationDelay: '3.2s' }}>
+        <div style={{ opacity: 0, animation: 'fadeSlideUp 1s ease forwards', animationDelay: '4.5s' }}>
           <button
             onClick={() => {
               const el = document.getElementById("projects-showcase");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
-            className="inline-flex items-center gap-2 transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+            className="inline-flex items-center justify-center transition-all hover:scale-105"
             style={{
               fontFamily: "Inter, Arial, sans-serif",
-              fontSize: 14,
-              fontWeight: 500,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              background: "rgba(255,255,255,0.1)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
+              fontSize: "15px",
+              fontWeight: 600,
+              background: "#0a0a0a",
               color: "#ffffff",
-              border: "1px solid rgba(255,255,255,0.2)",
-              borderRadius: 8,
-              padding: "16px 32px",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "9999px",
+              padding: "14px 32px",
               cursor: "pointer",
-              boxShadow: "0 0 20px rgba(255,255,255,0.1)",
+              boxShadow: "0 4px 14px 0 rgba(0,0,0,0.39)",
             }}
           >
-            See How
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <polyline points="19 12 12 19 5 12"></polyline>
-            </svg>
+            See How &rsaquo;
           </button>
         </div>
       </div>

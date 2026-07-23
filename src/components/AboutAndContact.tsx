@@ -2,8 +2,8 @@ export const AboutAndContact = () => {
   return (
     <div className="w-full bg-[#111111] py-24 px-6 md:px-12 text-white flex flex-col items-center text-center">
       <div className="max-w-3xl mx-auto anim-fade-up">
-        <h2 className="font-serif text-3xl md:text-5xl mb-8">About Me</h2>
-        <p className="text-lg md:text-xl font-light opacity-80 leading-relaxed mb-16">
+        <h2 className="font-sans font-bold tracking-tight text-3xl md:text-5xl mb-8">About Me</h2>
+        <p className="text-lg md:text-xl font-light opacity-80 leading-relaxed mb-16 font-sans">
           I'm an 18-year-old taking a gap year to master AI, copywriting, and business systems. I don't just read theory—I build real systems that generate cash flow and solve hard problems.
         </p>
 
@@ -11,13 +11,18 @@ export const AboutAndContact = () => {
           href="https://wa.me/917025994979" 
           target="_blank" 
           rel="noreferrer"
-          className="anim-pulse-once inline-flex items-center gap-4 text-white font-bold text-xl md:text-3xl py-6 px-10 md:px-16 rounded-xl transition-all duration-300 transform hover:scale-105"
+          className="inline-flex items-center justify-center gap-3 transition-all hover:scale-105"
           style={{
-            background: "linear-gradient(135deg, rgba(37,211,102,0.8), rgba(18,140,126,0.8))",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            border: "1px solid rgba(255,255,255,0.3)",
-            boxShadow: "0 0 40px rgba(37,211,102,0.4), inset 0 0 20px rgba(255,255,255,0.2)"
+            fontFamily: "Inter, Arial, sans-serif",
+            fontSize: "16px",
+            fontWeight: 600,
+            background: "#0a0a0a",
+            color: "#ffffff",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: "9999px",
+            padding: "16px 40px",
+            cursor: "pointer",
+            boxShadow: "0 4px 14px 0 rgba(0,0,0,0.39)",
           }}
         >
           <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">

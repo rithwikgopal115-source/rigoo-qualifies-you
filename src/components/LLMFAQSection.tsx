@@ -89,17 +89,17 @@ export const LLMFAQSection = () => {
   };
 
   return (
-    <div className="w-full bg-black min-h-[60vh] py-24 px-6 md:px-12 flex justify-center border-t border-white/10" style={{ position: "relative", zIndex: 10 }}>
+    <div className="w-full bg-white min-h-[60vh] py-24 px-6 md:px-12 flex justify-center border-t border-black/10" style={{ position: "relative", zIndex: 10 }}>
       <div className="max-w-3xl w-full flex flex-col">
-        <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">Interrogate my AI.</h2>
-        <p className="font-sans text-white/50 mb-12">Ask it anything about my skills, availability, or process. It's built to be honest.</p>
+        <h2 className="font-sans font-bold tracking-tight text-4xl md:text-5xl text-black mb-4">Interrogate my AI.</h2>
+        <p className="font-sans text-black/60 mb-12">Ask it anything about my skills, availability, or process. It's built to be honest.</p>
         
         <div 
           ref={scrollRef}
-          className="flex-1 min-h-[300px] max-h-[500px] overflow-y-auto border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl p-6 mb-6"
+          className="flex-1 min-h-[300px] max-h-[500px] overflow-y-auto border border-black/10 bg-black/5 backdrop-blur-md rounded-2xl p-6 mb-6"
         >
           {messages.length === 0 && (
-            <div className="h-full flex items-center justify-center text-white/30 italic">
+            <div className="h-full flex items-center justify-center text-black/40 italic">
               Try asking: "What is your tech stack?" or "Are you available for freelance?"
             </div>
           )}
@@ -108,13 +108,13 @@ export const LLMFAQSection = () => {
               <div 
                 className={`max-w-[80%] rounded-xl px-4 py-3 text-sm md:text-base ${
                   msg.role === "user" 
-                    ? "bg-[#ff4242] text-white rounded-br-sm" 
-                    : "bg-white/10 text-white/90 rounded-bl-sm font-mono whitespace-pre-wrap"
+                    ? "bg-black text-white rounded-br-sm shadow-md" 
+                    : "bg-black/5 border border-black/5 text-black/90 rounded-bl-sm font-mono whitespace-pre-wrap"
                 }`}
               >
                 {msg.content}
                 {msg.role === "ai" && loading && i === messages.length - 1 && (
-                  <span className="anim-cursor inline-block w-2 h-4 bg-[#ff4242] ml-1 align-middle" />
+                  <span className="anim-cursor inline-block w-2 h-4 bg-black ml-1 align-middle" />
                 )}
               </div>
             </div>
@@ -129,12 +129,12 @@ export const LLMFAQSection = () => {
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             placeholder="Type your question..."
             disabled={loading}
-            className="w-full bg-white/5 border border-white/20 rounded-xl py-4 pl-4 pr-16 text-white placeholder:text-white/30 focus:outline-none focus:border-[#ff4242]/50 transition-colors"
+            className="w-full bg-black/5 border border-black/20 rounded-xl py-4 pl-4 pr-16 text-black placeholder:text-black/40 focus:outline-none focus:border-black transition-colors"
           />
           <button 
             onClick={handleSubmit}
             disabled={loading || !input.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-[#ff4242] rounded-lg text-white disabled:opacity-50 transition-opacity"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black rounded-lg text-white disabled:opacity-50 transition-opacity hover:scale-105"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14"></path>

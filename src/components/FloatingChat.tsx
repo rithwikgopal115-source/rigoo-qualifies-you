@@ -94,7 +94,7 @@ export const FloatingChat = () => {
       {/* Floating Action Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#ff4242] rounded-full shadow-lg flex items-center justify-center text-white hover:scale-105 transition-transform"
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-black rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-105 transition-transform animate-bounce border border-white/20"
       >
         {isOpen ? (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -112,8 +112,8 @@ export const FloatingChat = () => {
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-50 w-[350px] max-h-[500px] h-[70vh] bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden anim-fade-up">
           <div className="bg-white/5 border-b border-white/10 p-4 flex justify-between items-center">
-            <div className="font-serif text-white">Rigoo's AI</div>
-            <div className="w-2 h-2 rounded-full bg-[#ff4242] animate-pulse"></div>
+            <div className="font-sans font-bold text-white tracking-tight">Rigoo's AI</div>
+            <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
           </div>
           
           <div 

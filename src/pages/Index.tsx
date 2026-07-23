@@ -40,7 +40,7 @@ const Index = () => {
         backgroundColor: "#000000",
       }}
     >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-md z-0"></div>
+      <div className="absolute inset-0 bg-black/60 z-0"></div>
 
       {/* Navbar */}
       <div className="w-full h-20 flex items-center justify-between px-8 relative z-50 bg-black/20 backdrop-blur-sm border-b border-white/10">
@@ -50,7 +50,7 @@ const Index = () => {
         </div>
       </div>
 
-      <main className="w-full max-w-[1400px] mx-auto px-6 pt-32 pb-16 z-10 flex flex-col justify-center">
+      <main className="w-full max-w-[1400px] mx-auto px-6 pt-24 pb-0 z-10 flex flex-col justify-center">
         <HeroSection />
       </main>
 
