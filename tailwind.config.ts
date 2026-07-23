@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
+        serif: ["Playfair Display", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
         mono: ["Space Mono", "ui-monospace", "monospace"],
-        sans: ["IBM Plex Sans", "system-ui", "sans-serif"],
       },
       colors: {
         "rigoo-accent": "hsl(var(--rigoo-accent))",

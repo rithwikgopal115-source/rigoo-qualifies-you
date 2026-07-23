@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-import { TabBar, type Tab } from "@/components/TabBar";
-import { ConversationalFlow } from "@/components/ConversationalFlow";
-import { MetroGallery } from "@/components/MetroGallery";
-import { PersonalTab } from "@/components/PersonalTab";
-import { IconGrid } from "@/components/Icons";
+import { HeroSection } from "@/components/HeroSection";
+import { ProjectsShowcase } from "@/components/ProjectsShowcase";
+import { AboutAndContact } from "@/components/AboutAndContact";
+import { LLMFAQSection } from "@/components/LLMFAQSection";
+import { FloatingChat } from "@/components/FloatingChat";
 
 const Index = () => {
   const [tab, setTab] = useState<Tab>("PROFESSIONAL");
@@ -29,105 +29,45 @@ const Index = () => {
     setFlowKey((k) => k + 1);
   }, []);
 
-  const bgColor = flowActivated ? "#f0f0f0" : isPersonal ? "#ffffff" : "#000000";
-
   return (
     <div
+      className="bg-cover bg-center bg-fixed bg-no-repeat w-full"
       style={{
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        position: "relative",
-        background: bgColor,
-        transition: "background 0.9s ease",
-        overflow: "hidden",
+        backgroundImage: "url('/green rolling hills.png')",
+        backgroundColor: "#000000",
       }}
     >
-      <TabBar tab={tab} onSwitch={handleTabSwitch} isPersonal={isPersonal} flowActivated={flowActivated} />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-md z-0"></div>
 
-      <main
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          padding: "110px clamp(16px, 4vw, 96px) 0",
-          overflow: "hidden",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        {tab === "PROFESSIONAL" ? (
-          <div className="pro-layout" style={{ display: "flex", gap: 48, flex: 1, overflow: "hidden" }}>
+      {/* Navbar */}
+      <div className="w-full h-20 flex items-center justify-between px-8 relative z-50 bg-black/20 backdrop-blur-sm border-b border-white/10">
+        <div></div>
+        <div className="w-10 h-10 bg-black border border-white/30 text-white flex items-center justify-center font-serif font-bold text-xl rounded shadow-lg">
+          R
+        </div>
+      </div>
 
-            {/* Left: conversational flow */}
-            <div
-              className="flow-col"
-              style={{
-                flex: "0 0 440px",
-                maxWidth: 480,
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden",
-              }}
-            >
-              <ConversationalFlow
-                key={flowKey}
-                flowActivated={flowActivated}
-                onFlowActivated={handleFlowActivated}
-                onFlowComplete={handleFlowComplete}
-              />
-            </div>
-
-            {/* Right: metro gallery, fades when flow activated on desktop */}
-            <div
-              className="gallery-col"
-              style={{
-                flex: 1,
-                overflow: "hidden",
-                opacity: flowActivated ? 0 : 1,
-                transform: flowActivated ? "translateX(24px)" : "translateX(0)",
-                transition: "opacity 0.7s ease, transform 0.7s ease",
-                pointerEvents: flowActivated ? "none" : "auto",
-              }}
-            >
-              {/* Mobile-only proof of work heading */}
-              <div
-                className="proof-heading-mobile"
-                style={{
-                  display: "none",
-                  alignItems: "center",
-                  gap: 14,
-                  paddingBottom: 20,
-                  paddingTop: 32,
-                  marginBottom: 20,
-                  borderBottom: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
-                <IconGrid color="#ff4242" spin={true} />
-                <div
-                  style={{
-                    fontFamily: "Arial",
-                    fontSize: 22,
-                    fontWeight: 200,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#ffffff",
-                    lineHeight: 1,
-                  }}
-                >
-                  proof of work
-                </div>
-              </div>
-
-              <MetroGallery />
-            </div>
-          </div>
-        ) : (
-          <div style={{ flex: 1, overflow: "auto", maxWidth: 720, margin: "0 auto", width: "100%" }}>
-            <PersonalTab />
-          </div>
-        )}
+      <main className="w-full max-w-[1400px] mx-auto px-6 pt-32 pb-16 z-10 flex flex-col justify-center">
+        <HeroSection />
       </main>
+
+      {/* Projects Showcase - Orange Background */}
+      <ProjectsShowcase />
+
+      {/* LLM FAQ Section */}
+      <div className="w-full bg-black/90 backdrop-blur-md border-t border-white/10">
+        <div className="max-w-[1400px] mx-auto px-6 py-24">
+          <LLMFAQSection />
+        </div>
+      </div>
+
+      {/* About & Contact */}
+      <AboutAndContact />
+      
+      <FloatingChat />
     </div>
   );
 };

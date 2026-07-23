@@ -256,12 +256,12 @@ export const ConversationalFlow = ({ flowActivated, onFlowActivated, onFlowCompl
 
   const heroLine = (text: string, color: string, mb = 4) => (
     <div
+      className="anim-glow-fade font-serif"
       style={{
-        fontFamily: "Arial",
-        fontSize: "clamp(28px,3.4vw,46px)",
-        fontWeight: 200,
+        fontSize: "clamp(42px,5.4vw,64px)",
+        fontWeight: 400,
         lineHeight: 1.05,
-        letterSpacing: "0.01em",
+        letterSpacing: "-0.02em",
         color,
         marginBottom: mb,
         transition: "color 0.8s ease",
@@ -279,8 +279,10 @@ export const ConversationalFlow = ({ flowActivated, onFlowActivated, onFlowCompl
     >
       {/* Hero */}
       <div className="anim-fade-up" style={{ padding: "32px 0 36px 0" }}>
-          {heroLine("input: your problem.", heroPrimary, 4)}
-          {heroLine("output: solved.", "#ff4242", 10)}
+        {heroLine("most portfolios are a résumé", heroPrimary, 4)}
+        {heroLine("with a coat of paint.", "#ff4242", 10)}
+        {heroLine("this one", heroPrimary, 4)}
+        {heroLine("qualifies you.", "#ff4242", 8)}
         <div
           style={{
             fontFamily: "Arial",
@@ -442,15 +444,15 @@ export const ConversationalFlow = ({ flowActivated, onFlowActivated, onFlowCompl
             >
               RIGOO'S ASSESSMENT
             </div>
-         <div
-            style={{
-              fontFamily: "Arial",
-              fontSize: 12,
-              lineHeight: 1.9,
-              color: "#0a0a0a",
-              whiteSpace: "pre-wrap",
-            }}
-          >
+            <div
+              className="font-mono"
+              style={{
+                fontSize: 12,
+                lineHeight: 1.9,
+                color: "#0a0a0a",
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {aiText}
               {!streamDone && (
                 <span className="anim-cursor" style={{ color: "#ff4242", marginLeft: 2 }}>█</span>
