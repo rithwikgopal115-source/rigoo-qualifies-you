@@ -1,0 +1,20 @@
+graph TD
+    %% Ingestion
+    A[New Nuanced Source / Course Video] -->|Ingress| B["Folder 1: collected raw inputs<br/>(Kept 100% Raw)"]
+    C[Official Docs / Synthesized PDF or MD] -->|Ingress| D["Folder 2: sorted raw inputs<br/>(Ingress Path)"]
+    
+    %% Processing
+    D -->|Watcher Script detects file| E["Automatic Deconstruction<br/>(Max 5 Pages / 2500 Words)"]
+    E -->|Output| F["Original PDF + Text MD Chunks<br/>in (Chopped) Subfolder"]
+    
+    %% Brain / AI Synthesis
+    B & F -->|User Studies & Filters| G["Human Judgment & Taste Layer<br/>(First Principles & Mental Models)"]
+    G -->|Hypothesis Testing| H["Diagramming & Excalidraw Mapping"]
+    
+    %% Standardize
+    H -->|Define Rules & Blueprints| I["Folder 3: standardized macro systems<br/>(The Source of Truth)"]
+    
+    %% Run Loop
+    I -->|Active Copywriting Campaigns| J["Draft Content Execution"]
+    J -->|Publish & Run Analytics| K["CMF Metrics (CTR / Hook Rate / Read Depth)"]
+    K -->|Feedback data| A

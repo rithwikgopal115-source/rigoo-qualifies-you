@@ -1,0 +1,22 @@
+graph LR
+    subgraph Foundation
+        M1[1. Specific Conditions] -->|Defines context| M2[2. Text-Subtext]
+        M2 -->|Defines emotional tone| M3[3. Liking-Relatability]
+    end
+    
+    subgraph Core Agitation
+        M3 -->|Builds trust to anchor| M4[4. Pain-Confidence]
+        M4 -->|Agitates consequences| M5[5. Problem Chains]
+    end
+    
+    subgraph Action Triggers
+        M5 -->|Forces immediate decision| M6[6. Urgency-Scarcity]
+        M6 -->|Frames packaging| M7[7. Concise-Curiosity]
+    end
+    
+    subgraph Validation
+        M7 -->|Synthesizes copy| M8[8. Synthesis & CMF Scoring]
+    end
+    
+    %% Loop back
+    M8 -->|Iterates rules| M1

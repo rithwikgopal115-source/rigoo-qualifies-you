@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA UI Architecture Research — Influence Accelerator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --surface-2: #1a1a24;
+            --border: rgba(255,255,255,0.08);
+            --text: #e8e8ef;
+            --text-secondary: #8888a0;
+            --accent: #ff6b35;
+            --accent-blue: #4da8da;
+            --accent-green: #4ade80;
+            --accent-purple: #a78bfa;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Cover Page */
+        .cover {
+            height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
+            background: linear-gradient(180deg, #0a0a0f 0%, #1a0f0a 50%, #0a0a0f 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 40px;
+        }
+        .cover-label { font-size: 0.85rem; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px; font-weight: 600; }
+        .cover h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 20px; max-width: 700px; }
+        .cover .subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin-bottom: 60px; }
+        .cover .meta { font-size: 0.8rem; color: var(--text-secondary); }
+        .cover .meta span { color: var(--accent); }
+
+        /* Layout */
+        .container { max-width: 900px; margin: 0 auto; padding: 80px 40px; }
+        
+        /* Typography */
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 10px; margin-top: 80px; }
+        h2 .num { color: var(--accent); font-family: 'Inter'; font-size: 1rem; font-weight: 600; display: block; margin-bottom: 8px; letter-spacing: 3px; }
+        h3 { font-size: 1.3rem; font-weight: 600; margin-top: 50px; margin-bottom: 16px; color: var(--accent-blue); }
+        h4 { font-size: 1rem; font-weight: 600; margin-top: 30px; margin-bottom: 10px; color: var(--accent-purple); }
+        p { margin-bottom: 20px; color: var(--text-secondary); }
+        p strong { color: var(--text); }
+        
+        /* Horizontal Rules */
+        hr { border: none; border-top: 1px solid var(--border); margin: 60px 0; }
+
+        /* Callout Boxes */
+        .callout {
+            background: var(--surface);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 20px 24px;
+            margin: 30px 0;
+        }
+        .callout.blue { border-left-color: var(--accent-blue); }
+        .callout.green { border-left-color: var(--accent-green); }
+        .callout.purple { border-left-color: var(--accent-purple); }
+        .callout p { margin-bottom: 8px; }
+        .callout p:last-child { margin-bottom: 0; }
+
+        /* Lists */
+        ul, ol { margin-bottom: 20px; padding-left: 24px; color: var(--text-secondary); }
+        li { margin-bottom: 10px; }
+        li strong { color: var(--text); }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.9rem; }
+        th { text-align: left; padding: 14px 16px; background: var(--surface); color: var(--text); border-bottom: 2px solid var(--accent); font-weight: 600; }
+        td { padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+        td:first-child { color: var(--text); font-weight: 500; }
+
+        /* Code */
+        code { background: var(--surface-2); padding: 2px 8px; border-radius: 4px; font-size: 0.9em; color: var(--accent); }
+        pre { background: var(--surface); padding: 24px; border-radius: 8px; overflow-x: auto; margin: 20px 0; border: 1px solid var(--border); }
+        pre code { background: none; padding: 0; color: var(--text-secondary); }
+
+        /* Cards Grid */
+        .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .card .card-title { font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .card p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0; }
+
+        /* Big Number Stats */
+        .stat-row { display: flex; gap: 30px; margin: 30px 0; }
+        .stat { flex: 1; text-align: center; padding: 30px; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); }
+        .stat .num { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
+        .stat .label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Diagram Boxes */
+        .diagram-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        /* Links */
+        a { color: var(--accent-blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* TOC */
+        .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 30px 40px; margin: 40px 0; }
+        .toc h3 { color: var(--text); margin-top: 0; }
+        .toc ol { padding-left: 20px; }
+        .toc li { margin-bottom: 8px; }
+        .toc a { color: var(--text-secondary); }
+        .toc a:hover { color: var(--accent); }
+
+        /* Person Cards */
+        .person-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+        .person-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .person-card .name { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .person-card .role { font-size: 0.8rem; color: var(--accent); margin-bottom: 8px; }
+        .person-card .desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px; }
+        .person-card .links { font-size: 0.8rem; }
+
+        /* Comparison Table */
+        .comparison { margin: 30px 0; }
+        .comparison .row { display: flex; border-bottom: 1px solid var(--border); }
+        .comparison .row:first-child { border-bottom: 2px solid var(--accent); }
+        .comparison .cell { flex: 1; padding: 14px 16px; }
+        .comparison .cell:first-child { font-weight: 600; color: var(--text); }
+        .comparison .header .cell { font-weight: 700; color: var(--accent); }
+
+        /* Print / PDF */
+        @media print {
+            body { background: white; color: #111; }
+            .cover { page-break-after: always; }
+            h2 { page-break-before: always; }
+        }
+
+        /* Approach Comparison */
+        .approach-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 30px 0;
+        }
+        .approach-card .approach-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px;
+        }
+        .approach-card .approach-name { font-size: 1.4rem; font-weight: 700; }
+        .approach-card .approach-tag {
+            background: rgba(255,107,53,0.15); color: var(--accent);
+            padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        }
+        .approach-card .approach-tag.blue { background: rgba(77,168,218,0.15); color: var(--accent-blue); }
+        .approach-card .approach-tag.purple { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
+        .approach-card .approach-tag.green { background: rgba(74,222,128,0.15); color: var(--accent-green); }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     COVER PAGE
+     ============================================================ -->
+<div class="cover">
+    <div class="cover-label">Research Document v1.0</div>
+    <h1>UI Architecture for the Influence Accelerator</h1>
+    <p class="subtitle">A comprehensive analysis of design patterns, interaction models, and architectural approaches for building the IA Psychological Engineering Workstation and Creator Economy Accelerator — grounded in your R&D corpus, first principles, and the best practices of Apple, Figma, Linear, and frontier AI tools.</p>
+    <p class="meta">Compiled <span>August 4, 2026</span> · Rithwik Gopal · <span>40+ Sources</span></p>
+</div>
+
+<!-- ============================================================
+     TABLE OF CONTENTS
+     ============================================================ -->
+<div class="container">
+
+<div class="toc">
+    <h3>Table of Contents</h3>
+    <ol>
+        <li><a href="#s1">The System You Are Building (Synthesis of All Docs)</a></li>
+        <li><a href="#s2">The Core UI Problem: Layered Abstraction</a></li>
+        <li><a href="#s3">Approach 1: Hierarchical Drill-Down (Current Direction)</a></li>
+        <li><a href="#s4">Approach 2: Canvas + Inspector (Figma / Logic Pro Model)</a></li>
+        <li><a href="#s5">Approach 3: Conversational Shell + Contextual Panels (Cursor / Arc Model)</a></li>
+        <li><a href="#s6">Approach 4: Graph-First Workstation (Unreal / ComfyUI Model)</a></li>
+        <li><a href="#s7">Approach 5: Hybrid — The Recommended Architecture</a></li>
+        <li><a href="#s8">Comparison Matrix: All 5 Approaches</a></li>
+        <li><a href="#s9">Design Principles: Lessons from the Best</a></li>
+        <li><a href="#s10">Key People & Resources</a></li>
+        <li><a href="#s11">The Glassmorphism Question</a></li>
+        <li><a href="#s12">Psychological Engineering in the UI Itself</a></li>
+        <li><a href="#s13">Recommendations & Next Steps</a></li>
+    </ol>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 1: THE SYSTEM
+     ============================================================ -->
+<h2 id="s1"><span class="num">01</span>The System You Are Building</h2>
+
+<p>Before exploring UI approaches, we must first ground the discussion in <strong>what the system actually is</strong>. After reading every document in your R&D folder — including the_answer.md, user_vision_and_execution_plan.md, implementation_plan.md, project_status_and_roadmap.md, the agent specs, mermaid diagrams, Avatar_Internal.md, CLAUDE.md, the DSPy learning sessions, and the Conditions Deck — here is the synthesized picture:</p>
+
+<div class="callout">
+    <p><strong>The Influence Accelerator is a Neurosymbolic Content Engineering OS.</strong></p>
+    <p>It has two operating modes that share the same underlying engine but present different levels of abstraction to the user:</p>
+</div>
+
+<div class="card-grid">
+    <div class="card">
+        <div class="card-title" style="color: var(--accent-blue);">PEW — Psychological Engineering Workstation</div>
+        <p>The raw engine. First-principles psychology (16 levels of Human Sociality). Node-based constraint harness. Symbolic + Neural layers. Domain-agnostic. Works for any medium: social media, sales letters, speeches, product positioning.</p>
+    </div>
+    <div class="card">
+        <div class="card-title" style="color: var(--accent);">CEA — Creator Economy Accelerator</div>
+        <p>A fine-tuned wrapper on top of PEW. Specifically optimized for social media distribution, reach, and creator monetization. Uses the same engine but with platform-specific constraints (IG Reels, YouTube, X, LinkedIn) and creator-economy terminology (Avatar, Content, Conversion Chain).</p>
+    </div>
+</div>
+
+<h3>The Three Pillars (Shared by Both Modes)</h3>
+
+<p>Regardless of whether you call them Human/Stimulus/Action (PEW) or Avatar/Content/Conversion Chain (CEA), the system operates on three fundamental pillars:</p>
+
+<div class="stat-row">
+    <div class="stat">
+        <div class="num" style="color: var(--accent-blue);">1</div>
+        <div class="label">The Subject</div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">Human / Avatar<br>28 psychographic data points. The conditions deck. The belief architecture. The internal + market reality.</p>
+    </div>
+    <div class="stat">
+        <div class="num" style="color: var(--accent);">2</div>
+        <div class="label">The Payload</div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">Stimulus / Content<br>AI-generated copy that flips incorrect beliefs. Passes through 5-node constraint harness + Self-Refine + LLM-as-Judge quality gate.</p>
+    </div>
+    <div class="stat">
+        <div class="num" style="color: var(--accent-green);">3</div>
+        <div class="label">The Path</div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px;">Action / Conversion Chain<br>The psychological journey map from first contact to conversion. Each node = a state transition in the subject's psychology.</p>
+    </div>
+</div>
+
+<h3>The Neurosymbolic Stack (Under the Hood)</h3>
+
+<div class="diagram-box">
+┌──────────────────────────────────────────────────────┐
+│                 SYMBOLIC LAYER                        │
+│         (The Deterministic Node Harness)              │
+│                                                       │
+│  Node 1       Node 2       Node 3       Node 4       │
+│  Awareness →  Platform  →  Funnel    →  Brand Voice  │
+│  Stage        Format       Context      + Taste       │
+│                                                       │
+│  HARD RULES: "The AI literally cannot output slop     │
+│   because the harness won't allow it."                │
+└───────────────────────┬───────────────────────────────┘
+                        │
+                        ▼
+┌──────────────────────────────────────────────────────┐
+│                  NEURAL LAYER                         │
+│         (DSPy + Self-Refine + Reflexion)              │
+│                                                       │
+│  LLM generates within constraints                     │
+│  → Self-Refine: critiques own draft                   │
+│  → Reflexion: stores failures in memory               │
+│  → LLM-as-Judge: 7-dimension scoring (≥ 7.0/10)      │
+│  → Loops until quality gate passes                    │
+│                                                       │
+│  LAYER 2: Human Sociality (16 Levels)                 │
+│  The reasoning model pulls from evolutionary psych,   │
+│  neuroscience, cognitive science, sociology, etc.     │
+│  to select the optimal psychological approach.        │
+└──────────────────────────────────────────────────────┘
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 2: THE CORE UI PROBLEM
+     ============================================================ -->
+<h2 id="s2"><span class="num">02</span>The Core UI Problem: Layered Abstraction</h2>
+
+<p>The fundamental challenge is: <strong>How do you expose a system this deep through a visual interface without overwhelming the user or dumbing it down?</strong></p>
+
+<p>You are dealing with at least 4 layers of depth:</p>
+
+<table>
+    <tr><th>Layer</th><th>What It Contains</th><th>Interaction Type</th></tr>
+    <tr><td>1. Mode Selection</td><td>Chat / CEA / PEW</td><td>Simple toggle</td></tr>
+    <tr><td>2. Pillar Selection</td><td>Avatar / Content / Conversion Chain (or Human / Stimulus / Action)</td><td>3 big blocks</td></tr>
+    <tr><td>3. Pillar Editor</td><td>28 psychographic fields, belief architectures, node chains, copy outputs</td><td>Deep data entry + canvas</td></tr>
+    <tr><td>4. Engine Config</td><td>DSPy nodes, quality thresholds, Layer 2 reasoning weights, model selection</td><td>Advanced settings (hidden by default)</td></tr>
+</table>
+
+<p>The question is: <strong>What is the optimal interaction model for navigating between these layers?</strong></p>
+
+<p>Below are 5 distinct approaches, each modeled after a real-world system that has solved a similar problem. Each has trade-offs.</p>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 3: APPROACH 1
+     ============================================================ -->
+<h2 id="s3"><span class="num">03</span>Approach 1: Hierarchical Drill-Down</h2>
+
+<div class="approach-card">
+    <div class="approach-header">
+        <div class="approach-name">The iOS Settings Model</div>
+        <div class="approach-tag">Current Direction</div>
+    </div>
+    <p><strong>Inspired by:</strong> Apple iOS Settings, current IA UI, Linear's nested views</p>
+    <p><strong>Concept:</strong> Strict parent → child navigation. Each click drills you one level deeper. Back button returns you one level up. No side-by-side views.</p>
+</div>
+
+<p><strong>How it maps to IA:</strong></p>
+<ol>
+    <li>Home Screen: Chat + Mode Toggle (Chat / CEA / PEW)</li>
+    <li>Click CEA → See 3 big blocks (Avatar, Content, Conversion Chain)</li>
+    <li>Click Avatar → Full-screen editor with 28 fields</li>
+    <li>Back → Returns to 3-block overview</li>
+</ol>
+
+<div class="callout green">
+    <p><strong>✅ Strengths:</strong></p>
+    <p>Dead simple mental model. Zero cognitive overload. Clean navigation breadcrumb. Each screen has one purpose. Mobile-friendly. Easy to implement.</p>
+</div>
+
+<div class="callout">
+    <p><strong>⚠️ Weaknesses:</strong></p>
+    <p>You lose context of the other two pillars when editing one. The system's power comes from the <em>relationship</em> between pillars (Avatar constraints → shape Stimulus → inform Action Chain). A strictly hierarchical UI hides these relationships. You're always in one tunnel. This is the "iOS Settings" problem — great for linear config, bad for systems thinking.</p>
+</div>
+
+<p><strong>Best for:</strong> Initial onboarding / data entry phase. Bad for the active "engineering" phase where you're iterating across all three pillars simultaneously.</p>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 4: APPROACH 2
+     ============================================================ -->
+<h2 id="s4"><span class="num">04</span>Approach 2: Canvas + Inspector</h2>
+
+<div class="approach-card">
+    <div class="approach-header">
+        <div class="approach-name">The Figma / Logic Pro Model</div>
+        <div class="approach-tag blue">Recommended for CEA</div>
+    </div>
+    <p><strong>Inspired by:</strong> Figma, Apple Logic Pro X, Adobe Premiere, Notion databases</p>
+    <p><strong>Concept:</strong> A persistent canvas (the main workspace) with a contextual Inspector panel on the right that changes based on what you've selected.</p>
+</div>
+
+<p><strong>How it maps to IA:</strong></p>
+
+<div class="diagram-box">
+┌─────────────────────────────────────────────────────────┐
+│  [Chat] [CEA] [PEW]                     [Settings ⚙]   │
+├─────────────────────────────────────────┬───────────────┤
+│                                         │               │
+│          MAIN CANVAS                    │   INSPECTOR   │
+│                                         │               │
+│  ┌──────────┐  ┌──────────┐  ┌────────┐│ ╔═══════════╗ │
+│  │  Avatar  │──│ Content  │──│ Conv.  ││ ║  AVATAR   ║ │
+│  │  ██████  │  │  ██████  │  │ Chain  ││ ║           ║ │
+│  │  (click) │  │          │  │        ││ ║ Identity: ║ │
+│  └──────────┘  └──────────┘  └────────┘│ ║ Core Fear:║ │
+│                                         │ ║ Beliefs:  ║ │
+│  [Relationship lines visible]           │ ║ ...28 flds║ │
+│                                         │ ╚═══════════╝ │
+└─────────────────────────────────────────┴───────────────┘
+</div>
+
+<ul>
+    <li>The 3 pillars are always visible as blocks/cards on the canvas.</li>
+    <li>Click any pillar → the <strong>Inspector panel</strong> on the right populates with that pillar's detailed editor (forms, fields, node chains).</li>
+    <li>You can <strong>see the relationships</strong> between pillars while editing one.</li>
+    <li>The Inspector can be collapsed for a wider canvas view.</li>
+</ul>
+
+<div class="callout green">
+    <p><strong>✅ Strengths:</strong></p>
+    <p>Maintains system awareness at all times. You never lose context. The relationship between Avatar → Content → Conversion Chain is always visible. Figma users, designers, and system thinkers feel at home. Scales beautifully as you add more components.</p>
+</div>
+
+<div class="callout">
+    <p><strong>⚠️ Weaknesses:</strong></p>
+    <p>More complex to implement. Requires responsive split-pane logic. The Inspector can feel cramped on smaller screens. Needs clear visual hierarchy to avoid overwhelming the canvas.</p>
+</div>
+
+<p><strong>Best for:</strong> The "engineering" phase where you're actively iterating. This is how Figma, Logic Pro, and Premiere handle deep creative tools — always-visible context + deep editing on demand.</p>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 5: APPROACH 3
+     ============================================================ -->
+<h2 id="s5"><span class="num">05</span>Approach 3: Conversational Shell + Contextual Panels</h2>
+
+<div class="approach-card">
+    <div class="approach-header">
+        <div class="approach-name">The Cursor / Arc Browser Model</div>
+        <div class="approach-tag purple">Most "AI-Native"</div>
+    </div>
+    <p><strong>Inspired by:</strong> Cursor IDE Composer, Arc Browser Spaces, Claude Artifacts, Vercel v0</p>
+    <p><strong>Concept:</strong> Chat is the primary interface. But when the AI generates structured output (Avatar data, copy drafts, conversion chains), it materializes as interactive panels alongside the chat.</p>
+</div>
+
+<p><strong>How it maps to IA:</strong></p>
+
+<div class="diagram-box">
+┌─────────────────────────────────────────────────────────┐
+│  [Chat] [CEA] [PEW]                                    │
+├──────────────────────────┬──────────────────────────────┤
+│                          │                              │
+│     CHAT THREAD          │    GENERATED ARTIFACT        │
+│                          │                              │
+│  You: "Set up avatar     │  ┌────────────────────────┐  │
+│   for burned-out agency  │  │    AVATAR PANEL         │  │
+│   owners age 28-35"      │  │                        │  │
+│                          │  │  Identity: Agency Owner │  │
+│  AI: "I've populated     │  │  Core Fear: Irrelevance│  │
+│   the avatar with 28     │  │  Belief to Flip: ...   │  │
+│   data points based on   │  │  [Edit] [Expand]       │  │
+│   your input + market    │  │                        │  │
+│   research..."           │  └────────────────────────┘  │
+│                          │                              │
+│  You: "Now generate      │  ┌────────────────────────┐  │
+│   a LinkedIn hook"       │  │    COPY DRAFT           │  │
+│                          │  │  Hook Score: 8.2/10     │  │
+│                          │  │  "You have 17 tabs..."  │  │
+│                          │  └────────────────────────┘  │
+│                          │                              │
+│  [Type here...]          │                              │
+└──────────────────────────┴──────────────────────────────┘
+</div>
+
+<ul>
+    <li>Chat on the left, generated artifacts (Avatars, Copy Drafts, Conversion Chains) materialize on the right.</li>
+    <li>You can click into any artifact to expand it into a full editor.</li>
+    <li>The chat thread becomes a <strong>session log</strong> of your engineering decisions.</li>
+    <li>This is exactly how Claude Artifacts and Cursor Composer work.</li>
+</ul>
+
+<div class="callout green">
+    <p><strong>✅ Strengths:</strong></p>
+    <p>Most natural AI interaction model. Users can work in natural language. The system feels alive and responsive. Session history provides context. Scales to any number of artifact types. Matches the mental model of "talking to an AI assistant."</p>
+</div>
+
+<div class="callout">
+    <p><strong>⚠️ Weaknesses:</strong></p>
+    <p>Requires a functioning AI backend (not just UI mockup). Can feel disorienting if artifacts pile up. Less spatial control than a canvas. Harder to visualize the full system architecture at a glance. Users who prefer direct manipulation may find chat-first frustrating.</p>
+</div>
+
+<p><strong>Best for:</strong> When the AI backend is ready and you want users to interact with the system conversationally. This is the most "AI-native" approach — it's how Cursor, Claude, and v0 handle complex tool interaction.</p>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 6: APPROACH 4
+     ============================================================ -->
+<h2 id="s6"><span class="num">06</span>Approach 4: Graph-First Workstation</h2>
+
+<div class="approach-card">
+    <div class="approach-header">
+        <div class="approach-name">The Unreal / ComfyUI Model</div>
+        <div class="approach-tag green">Most Powerful</div>
+    </div>
+    <p><strong>Inspired by:</strong> Unreal Engine Blueprints, ComfyUI, LangFlow, Flowise, n8n</p>
+    <p><strong>Concept:</strong> The entire system is a visual graph. Avatar, Content, and Conversion Chain are not separate pages — they are nodes on a single infinite canvas, connected by data wires.</p>
+</div>
+
+<p><strong>How it maps to IA:</strong></p>
+
+<div class="diagram-box">
+┌──────────────────────────────────────────────────────────────┐
+│  ◉ Pan / Zoom Canvas                          [Run ▶] [⚙]  │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│   ╔══════════════╗         ╔══════════════╗                  │
+│   ║   AVATAR     ║────────▶║  NODE 1:     ║                  │
+│   ║              ║         ║  Awareness   ║                  │
+│   ║  28 fields   ║    ┌───▶║  Mapping     ║                  │
+│   ║  [Expand ↗]  ║    │    ╚══════╤═══════╝                  │
+│   ╚══════════════╝    │           │                          │
+│                       │           ▼                          │
+│   ╔══════════════╗    │    ╔══════════════╗                  │
+│   ║  PLATFORM    ║────┘    ║  NODE 2:     ║                  │
+│   ║  CONSTRAINTS ║         ║  Platform    ║                  │
+│   ║  IG / YT / X ║         ║  Format      ║                  │
+│   ╚══════════════╝         ╚══════╤═══════╝                  │
+│                                   │                          │
+│                                   ▼                          │
+│                            ╔══════════════╗                  │
+│                            ║  WRITING     ║                  │
+│                            ║  AGENT       ║──▶ [OUTPUT]      │
+│                            ║  (DSPy)      ║                  │
+│                            ╚══════════════╝                  │
+│                                                              │
+│   ╔══════════════╗                                           │
+│   ║  CONVERSION  ║  (Separate subgraph, expandable)          │
+│   ║  CHAIN       ║                                           │
+│   ╚══════════════╝                                           │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+</div>
+
+<ul>
+    <li>Every component (Avatar, Platform, Writing Agent, Judge, Conversion Chain) is a <strong>node on a canvas</strong>.</li>
+    <li>Data flows visually via wires (e.g., Avatar psychographics → Awareness Node → Platform Node → Writing Agent).</li>
+    <li>Double-clicking any node opens its internal editor (the 28 fields, the copy draft, etc.).</li>
+    <li>Subgraphs allow you to collapse complex chains into single nodes for cleanliness.</li>
+    <li>This maps directly to your LangGraph architecture: <code>OnboardingNode → ResearchNode → WritingNode → JudgeNode</code>.</li>
+</ul>
+
+<div class="callout green">
+    <p><strong>✅ Strengths:</strong></p>
+    <p>Directly mirrors the actual system architecture. Users can see and understand the data flow. Most extensible — adding new nodes, agents, or processing steps is trivial. Power users will love it. This is exactly how ComfyUI, LangFlow, and Unreal Engine handle complex pipelines. <strong>Your system IS a graph (LangGraph). The UI should reflect that.</strong></p>
+</div>
+
+<div class="callout">
+    <p><strong>⚠️ Weaknesses:</strong></p>
+    <p>Highest implementation complexity. Requires a library like React Flow. "Spaghetti" risk if too many nodes. Intimidating for first-time users. Needs strong onboarding/guided mode. Not mobile-friendly.</p>
+</div>
+
+<p><strong>Best for:</strong> The PEW (Psychological Engineering Workstation) mode specifically. This IS the "under the hood" view. It's ComfyUI for marketing. It's the view that makes the system transparent and extensible.</p>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 7: APPROACH 5 — THE HYBRID
+     ============================================================ -->
+<h2 id="s7"><span class="num">07</span>Approach 5: The Hybrid Architecture</h2>
+
+<div class="approach-card">
+    <div class="approach-header">
+        <div class="approach-name">The Recommended Build</div>
+        <div class="approach-tag" style="background: rgba(255,107,53,0.3);">★ Recommendation</div>
+    </div>
+    <p><strong>Inspired by:</strong> The relationship between Claude Chat ↔ Claude Artifacts, ComfyUI Backend ↔ ComfyUI App Mode, Xcode Interface Builder ↔ Xcode Code Editor</p>
+    <p><strong>Concept:</strong> Don't pick one approach. Layer them. Each mode (Chat / CEA / PEW) gets the interaction model that best suits its purpose.</p>
+</div>
+
+<table>
+    <tr><th>Mode</th><th>Interaction Model</th><th>Rationale</th></tr>
+    <tr><td><strong>Chat</strong></td><td>Approach 3 (Conversational Shell)</td><td>Natural language interaction. AI generates artifacts. Session log for decisions.</td></tr>
+    <tr><td><strong>CEA</strong></td><td>Approach 2 (Canvas + Inspector)</td><td>3 pillars visible on canvas. Click to inspect/edit. Clean, visual, non-intimidating.</td></tr>
+    <tr><td><strong>PEW</strong></td><td>Approach 4 (Graph-First)</td><td>Full node canvas. Mirrors LangGraph architecture. Maximum control and transparency.</td></tr>
+</table>
+
+<p>This creates a natural <strong>progressive disclosure ladder</strong>:</p>
+
+<div class="diagram-box">
+ABSTRACTION LEVEL:   HIGH ◄──────────────────────► LOW
+
+                   CHAT          CEA            PEW
+                    │              │              │
+               [Talk to AI]  [Visual Blocks]  [Node Graph]
+               [Artifacts]   [Inspector]      [Data Wires]
+               [Session Log] [3 Pillars]      [Full Engine]
+                    │              │              │
+AUDIENCE:      New Users     Active Users    Power Users
+               Onboarding    Daily Workflow   System Design
+</div>
+
+<div class="callout green">
+    <p><strong>Why this works:</strong></p>
+    <p>It respects the user's journey. A new user starts in Chat, talks to the system, gets comfortable. They graduate to CEA when they want visual control. They unlock PEW when they want to see and modify the underlying graph. This is exactly how Apple structures Logic Pro (simple mode → advanced mode) and how ComfyUI has "App Mode" (simplified) vs "Graph Mode" (full power).</p>
+</div>
+
+<div class="callout blue">
+    <p><strong>Implementation phasing:</strong></p>
+    <p>1. <strong>Phase 1 (Now):</strong> Build CEA as Canvas + Inspector. This is the highest-leverage UI for daily use.</p>
+    <p>2. <strong>Phase 2:</strong> Build Chat mode with artifact panels (once AI backend exists).</p>
+    <p>3. <strong>Phase 3:</strong> Build PEW graph mode with React Flow (once the full LangGraph pipeline is running).</p>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 8: COMPARISON MATRIX
+     ============================================================ -->
+<h2 id="s8"><span class="num">08</span>Comparison Matrix</h2>
+
+<table>
+    <tr>
+        <th>Criterion</th>
+        <th>1. Drill-Down</th>
+        <th>2. Canvas+Inspector</th>
+        <th>3. Chat+Panels</th>
+        <th>4. Graph-First</th>
+        <th>5. Hybrid</th>
+    </tr>
+    <tr>
+        <td>Cognitive Load</td>
+        <td>★★★★★</td>
+        <td>★★★★</td>
+        <td>★★★★</td>
+        <td>★★</td>
+        <td>★★★★</td>
+    </tr>
+    <tr>
+        <td>System Awareness</td>
+        <td>★★</td>
+        <td>★★★★</td>
+        <td>★★★</td>
+        <td>★★★★★</td>
+        <td>★★★★★</td>
+    </tr>
+    <tr>
+        <td>Extensibility</td>
+        <td>★★</td>
+        <td>★★★</td>
+        <td>★★★</td>
+        <td>★★★★★</td>
+        <td>★★★★★</td>
+    </tr>
+    <tr>
+        <td>Implementation Effort</td>
+        <td>★★★★★</td>
+        <td>★★★</td>
+        <td>★★★</td>
+        <td>★★</td>
+        <td>★★</td>
+    </tr>
+    <tr>
+        <td>Matches Your Architecture</td>
+        <td>★★</td>
+        <td>★★★</td>
+        <td>★★★</td>
+        <td>★★★★★</td>
+        <td>★★★★★</td>
+    </tr>
+    <tr>
+        <td>Premium Feel</td>
+        <td>★★★</td>
+        <td>★★★★</td>
+        <td>★★★★</td>
+        <td>★★★★</td>
+        <td>★★★★★</td>
+    </tr>
+</table>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 9: DESIGN PRINCIPLES
+     ============================================================ -->
+<h2 id="s9"><span class="num">09</span>Design Principles from the Best</h2>
+
+<h3>Apple: Progressive Disclosure</h3>
+<p>Apple's professional tools (Logic Pro, Final Cut, Xcode) all share one principle: <strong>the surface layer must feel self-evident</strong>. Complex features are pushed into Inspector panels, contextual menus, or secondary windows that only appear when required. The user's cognitive load is only taxed by the specific task they're focusing on.</p>
+
+<div class="callout blue">
+    <p><strong>Applied to IA:</strong> The 3 big blocks (Avatar, Content, Conversion Chain) ARE the self-evident surface. The 28 psychographic fields, the belief architecture, the DSPy nodes — these are the Inspector. They appear only when you drill into a specific pillar.</p>
+</div>
+
+<h3>Linear: Command-First Minimalism</h3>
+<p>Linear keeps its visible UI sparse and uses a command palette (<code>Cmd+K</code>) as the primary navigation tool. Everything is keyboard-accessible. The surface is calm; the power is one shortcut away.</p>
+
+<div class="callout blue">
+    <p><strong>Applied to IA:</strong> Consider adding a command palette to IA. <code>Cmd+K</code> → "Switch to Avatar", "Generate hook for LinkedIn", "Run quality gate". This would let power users fly without clicking through hierarchies.</p>
+</div>
+
+<h3>Figma: Always-Visible Context</h3>
+<p>Figma never hides the canvas. You can always see the full design while editing a specific component in the Inspector. This maintains spatial awareness — you know where your edit fits in the larger system.</p>
+
+<div class="callout blue">
+    <p><strong>Applied to IA (CEA mode):</strong> The 3 pillars should always be visible as blocks on the canvas, even when you're deep-editing one in the Inspector panel. This maintains the mental model of "I'm editing Avatar, but I can see how it connects to Content and Conversion Chain."</p>
+</div>
+
+<h3>Bret Victor: The Ladder of Abstraction</h3>
+<p>Bret Victor argues that the best tools let users move freely between abstraction levels — zooming in to see individual data points, zooming out to see the whole system. The UI should not trap you at one level.</p>
+
+<div class="callout blue">
+    <p><strong>Applied to IA:</strong> This IS the Hybrid architecture (Approach 5). Chat = highest abstraction. CEA Canvas = medium. PEW Graph = lowest. The user moves between them fluidly.</p>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 10: KEY PEOPLE
+     ============================================================ -->
+<h2 id="s10"><span class="num">10</span>Key People & Resources</h2>
+
+<div class="person-grid">
+    <div class="person-card">
+        <div class="name">Bret Victor</div>
+        <div class="role">Tools for Thought · Dynamic Mediums</div>
+        <div class="desc">Former Apple designer. Advocates for "explorable explanations" and malleable interfaces. His concept of the Ladder of Abstraction directly applies to IA's multi-level UI.</div>
+        <div class="links"><a href="https://worrydream.com" target="_blank">worrydream.com</a> · <a href="https://twitter.com/waboretum" target="_blank">@waboretum</a></div>
+    </div>
+    <div class="person-card">
+        <div class="name">Rasmus Andersson</div>
+        <div class="role">Figma · Inter Typeface</div>
+        <div class="desc">Designed Inter (the typeface you're using). His work proves that refined typographic hierarchy reduces perceived complexity in feature-heavy apps.</div>
+        <div class="links"><a href="https://rsms.me" target="_blank">rsms.me</a> · <a href="https://twitter.com/rsms" target="_blank">@rsms</a></div>
+    </div>
+    <div class="person-card">
+        <div class="name">Andy Matuschak</div>
+        <div class="role">Tools for Thought · Apple (former)</div>
+        <div class="desc">Focuses on reducing cognitive load and creating systems that match mental models. His work on "evergreen notes" and spaced repetition systems is directly relevant to how IA should structure knowledge.</div>
+        <div class="links"><a href="https://andymatuschak.org" target="_blank">andymatuschak.org</a> · <a href="https://twitter.com/andy_matuschak" target="_blank">@andy_matuschak</a></div>
+    </div>
+    <div class="person-card">
+        <div class="name">Mike Matas</div>
+        <div class="role">Apple · Facebook (former)</div>
+        <div class="desc">Emphasizes direct manipulation and making UI "disappear." His principle: remove jargon, let users interact directly with content. Pioneer of the "swipe to go back" gesture.</div>
+        <div class="links"><a href="https://twitter.com/mike_matas" target="_blank">@mike_matas</a></div>
+    </div>
+    <div class="person-card">
+        <div class="name">Karri Saarinen</div>
+        <div class="role">Linear · Co-Founder & CEO</div>
+        <div class="desc">Built the most admired project management tool in tech. Linear's command-palette-first, keyboard-driven UI is the gold standard for complex tools that feel simple.</div>
+        <div class="links"><a href="https://linear.app" target="_blank">linear.app</a> · <a href="https://twitter.com/karrisaarinen" target="_blank">@karrisaarinen</a></div>
+    </div>
+    <div class="person-card">
+        <div class="name">Guillermo Rauch</div>
+        <div class="role">Vercel · v0.dev</div>
+        <div class="desc">v0 is the most relevant precedent for IA's chat-to-artifact UI. Chat input on the left, rendered UI artifact on the right. Directly applicable to IA's Chat mode.</div>
+        <div class="links"><a href="https://vercel.com" target="_blank">vercel.com</a> · <a href="https://twitter.com/raaboretuchig" target="_blank">@rauchg</a></div>
+    </div>
+    <div class="person-card">
+        <div class="name">ComfyUI Community</div>
+        <div class="role">Open Source · Node-Based AI</div>
+        <div class="desc">The leading open-source node-based UI for AI image generation. Their "App Mode" (simple wrapper) vs "Graph Mode" (full nodes) duality is the exact model for CEA vs PEW.</div>
+        <div class="links"><a href="https://github.com/comfyanonymous/ComfyUI" target="_blank">GitHub</a></div>
+    </div>
+    <div class="person-card">
+        <div class="name">React Flow</div>
+        <div class="role">Open Source Library</div>
+        <div class="desc">The standard library for building node-based UIs in React. Used by Stripe, LangFlow, and Flowise. This is what you'd use to build PEW's graph mode.</div>
+        <div class="links"><a href="https://reactflow.dev" target="_blank">reactflow.dev</a> · <a href="https://github.com/xyflow/xyflow" target="_blank">GitHub</a></div>
+    </div>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 11: GLASSMORPHISM
+     ============================================================ -->
+<h2 id="s11"><span class="num">11</span>The Glassmorphism Question</h2>
+
+<h3>What Works in Production</h3>
+<ul>
+    <li><strong>Apple's "Liquid Glass" (iOS/macOS):</strong> Control Center, macOS sidebars. Used sparingly, with solid tints beneath the blur, maintaining legibility.</li>
+    <li><strong>Microsoft Fluent Design "Acrylic":</strong> Windows 11 context menus, Settings. Uses subtle noise textures over the blur to prevent "smearing."</li>
+    <li><strong>Your Mars background:</strong> Works well because the background image is low-frequency (smooth gradients, no high-contrast details), which means the blur doesn't create visual noise.</li>
+</ul>
+
+<h3>What Fails</h3>
+<ul>
+    <li><strong>Full-screen glassmorphism:</strong> Applying it to the entire page or primary reading areas reduces legibility.</li>
+    <li><strong>Cluttered backgrounds beneath glass:</strong> High-contrast or busy backgrounds create visual noise through the blur.</li>
+    <li><strong>Overuse:</strong> When everything is glass, nothing is glass. It loses its ability to create depth and hierarchy.</li>
+</ul>
+
+<div class="callout">
+    <p><strong>Recommendation for IA:</strong> Use glassmorphism for <strong>floating elements only</strong> — the navigation pill, modal overlays, the Inspector panel border. Keep the main canvas and editor backgrounds as solid dark surfaces (your current <code>rgba(20, 20, 25, 0.4)</code> is good). The Mars background provides the ambient warmth; the glass elements float on top of it. Don't make the glass the primary surface — make it the accent.</p>
+</div>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 12: PSYCHOLOGICAL ENGINEERING IN THE UI
+     ============================================================ -->
+<h2 id="s12"><span class="num">12</span>Psychological Engineering in the UI Itself</h2>
+
+<p>Your system is about psychological engineering. <strong>The UI should practice what it preaches.</strong></p>
+
+<h3>Principle 1: Safe Exploration</h3>
+<p>From your Avatar_Internal.md — the target user fears shipping imperfect work. The UI should make it psychologically safe to experiment: undo/redo, version history, draft states, "no wrong answers" language in the onboarding flow.</p>
+
+<h3>Principle 2: Instant Gratification</h3>
+<p>From your DSPy architecture — the system can generate copy in seconds. Surface this immediately. When a user fills in Avatar data, show a live preview of how the Stimulus engine would use that data. Real-time feedback loops reduce the gap between input and reward.</p>
+
+<h3>Principle 3: Progressive Commitment</h3>
+<p>From your 28-field psychographic interview — don't dump all 28 fields at once. Group them into 4 categories (Demographics → Psychographics → Beliefs → Behaviors). Show a progress bar (you already designed this in your implementation_plan.md). Let each completed category visually "unlock" the next one.</p>
+
+<h3>Principle 4: The Prediction Error</h3>
+<p>From your writing system — the best hooks induce "prediction error" (expecting one thing, getting another). The UI should do this too: when the AI generates copy, show the incorrect belief first (what the user typed in the Avatar), then reveal how the AI flipped it. This makes the system feel magical and builds trust in the engine.</p>
+
+<h3>Principle 5: Identity Alignment</h3>
+<p>From Section 5 of Avatar_Internal.md — this audience responds to "system thinker" language. The UI should use words like "configure," "calibrate," "architect," "constraints," "harness" rather than "set up," "create," "make." The UI language IS the brand.</p>
+
+<hr>
+
+<!-- ============================================================
+     SECTION 13: RECOMMENDATIONS
+     ============================================================ -->
+<h2 id="s13"><span class="num">13</span>Recommendations & Next Steps</h2>
+
+<div class="callout green">
+    <p><strong>The Verdict:</strong></p>
+    <p>Build the <strong>Hybrid Architecture</strong> (Approach 5), but phase it. Don't try to build all three modes at once.</p>
+</div>
+
+<h3>Phase 1: CEA as Canvas + Inspector (Build Now)</h3>
+<p>This is the highest-leverage UI for immediate use. It gives you:</p>
+<ul>
+    <li>The 3 pillars visible at all times on a canvas</li>
+    <li>A collapsible Inspector panel for deep editing</li>
+    <li>Relationship lines between pillars showing data flow</li>
+    <li>The glassmorphic Mars aesthetic you've designed</li>
+    <li>Can be built with vanilla HTML/CSS/JS (no React required yet)</li>
+</ul>
+
+<h3>Phase 2: Chat Mode with Artifacts (Build When Backend Exists)</h3>
+<p>Once the LangGraph + DSPy pipeline is running, the Chat mode becomes meaningful. Users can:</p>
+<ul>
+    <li>Talk to the system in natural language</li>
+    <li>See generated artifacts (Avatar data, copy drafts) materialize as panels</li>
+    <li>Edit artifacts inline</li>
+    <li>Maintain a session log of all engineering decisions</li>
+</ul>
+
+<h3>Phase 3: PEW Graph Mode (Build When System is Mature)</h3>
+<p>This is the "Claude Code" equivalent — the raw, transparent view of the entire system as a node graph. Requires:</p>
+<ul>
+    <li>React + React Flow (or similar graph library)</li>
+    <li>Mapping of LangGraph nodes to visual nodes</li>
+    <li>Subgraph collapsing for complexity management</li>
+    <li>This is the moat — no other marketing tool exposes its reasoning graph to the user</li>
+</ul>
+
+<h3>The Build Stack</h3>
+
+<table>
+    <tr><th>Component</th><th>Technology</th><th>Why</th></tr>
+    <tr><td>Phase 1 (CEA)</td><td>Vanilla HTML/CSS/JS</td><td>Fast. No dependencies. Ship today.</td></tr>
+    <tr><td>Phase 2 (Chat)</td><td>Next.js + Server Actions</td><td>SSR for chat streaming. API routes for LangGraph.</td></tr>
+    <tr><td>Phase 3 (PEW Graph)</td><td>React + React Flow</td><td>Industry standard for node-based UIs.</td></tr>
+    <tr><td>Styling</td><td>Tailwind CSS or Vanilla CSS</td><td>Your choice. Both work.</td></tr>
+    <tr><td>Backend</td><td>Python (LangGraph + DSPy)</td><td>Already decided in your implementation_plan.md.</td></tr>
+</table>
+
+<hr>
+
+<div style="text-align: center; padding: 80px 0; color: var(--text-secondary);">
+    <p style="font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;">End of Research Document</p>
+    <p style="font-size: 0.85rem; margin-top: 12px;">Compiled from 40+ sources including internal R&D docs, academic papers, and industry analysis.</p>
+    <p style="font-size: 0.85rem; margin-top: 8px;">August 4, 2026 · Rithwik Gopal · Influence Accelerator v3.0</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+graph TD
+    Start[Define Marketing Objective] --> Obj{Goal Type}
+    
+    %% Path A: Direct Conversion
+    Obj -->|Direct Conversion| DC["Target: High-Intent Avatars"]
+    DC --> DC_Offer[Frame Core Offer]
+    DC_Offer --> DC_Logic[Apply Module 4: Pain-Confidence<br/>& Module 6: Urgency-Scarcity]
+    
+    %% Path B: Brand Authority / Education
+    Obj -->|Brand Authority / Trust| BA["Target: Broad Industry Avatars"]
+    BA --> BA_Story[Frame Story / Case Study]
+    BA_Story --> BA_Logic[Apply Module 2: Text-Subtext<br/>& Module 3: Liking-Relatability]
+    
+    %% Platform constraints
+    DC_Logic & BA_Logic --> Plat{Platform Selected}
+    
+    Plat -->|LinkedIn / X| Plat_Text["Text Hook + Clear Formatting<br/>(Module 7: Concise-Curiosity)"]
+    Plat -->|YouTube / Instagram| Plat_AV["Visual Pattern Interrupt + High Intensity Hook"]
+    
+    %% Execution
+    Plat_Text & Plat_AV --> Split["Run Module 5: Problem Chains<br/>(Cascade Consequences)"]
+    Split --> Synthesis["Module 8: Pre-Publish CMF Scoring"]

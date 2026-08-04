@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influence Accelerator: Information Architecture Brief</title>
+    <style>
+        :root {
+            --mars-red: #D2452B;
+            --mars-dark: #8C2715;
+            --space-black: #0B0A0F;
+            --glass-bg: rgba(25, 25, 30, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #F0F0F0;
+            --text-secondary: #A0A0A5;
+            --layer-1: rgba(30, 144, 255, 0.15); /* Blue-ish for foundational data */
+            --layer-2: rgba(255, 165, 0, 0.15); /* Orange for judgment/reasoning */
+            --layer-3: rgba(210, 69, 43, 0.25); /* Mars Red for taste/execution */
+        }
+
+        body {
+            background-color: var(--space-black);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(210, 69, 43, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(140, 39, 21, 0.1), transparent 25%);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fff, var(--mars-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brief-intro {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #fff;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--mars-red);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .architecture-graph {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .layer-box {
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .layer-1 { background: var(--layer-1); border-left: 4px solid #1E90FF; }
+        .layer-2 { background: var(--layer-2); border-left: 4px solid #FFA500; }
+        .layer-3 { background: var(--layer-3); border-left: 4px solid var(--mars-red); }
+
+        .layer-title {
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .layer-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .data-flow {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            margin: -5px 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        ul {
+            color: var(--text-secondary);
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Information Architecture Brief</h1>
+        <p class="brief-intro">The neurosymbolic 3-layer structural blueprint for the Influence Accelerator System, moving from foundational conditions to advanced execution "taste."</p>
+    </div>
+
+    <div class="glass-panel">
+        <h2>System Overview</h2>
+        <p>The Influence Accelerator processes inputs through a progressive 3-tier hierarchy. Data enters at the base level (Conditions & Avatar Attributes), gets synthesized through the logic layer (Human Sociality & Evolutionary Psychology), and finally executes via the node-based decision matrix (Taste & Nuance). The ultimate goal is maximum accuracy in generating the <strong>Marketing.md</strong>, <strong>Avatar_Internal.md</strong>, and the final <strong>Stimuli/Ascension pathway</strong>.</p>
+    </div>
+
+    <div class="architecture-graph">
+        <!-- LAYER 1 -->
+        <div class="layer-box layer-1">
+            <div class="layer-title">
+                Layer 1: The Inner Layer
+                <span class="layer-badge">Conditions & Data</span>
+            </div>
+            <p>The foundational bedrock of the system. This layer acts as the primary knowledge graph, holding all deterministic rules and core inputs.</p>
+            <div class="grid-2">
+                <div>
+                    <h3>KJ's Conditions Deck</h3>
+                    <ul>
+                        <li>Specific Conditions</li>
+                        <li>Text & Subtext Mapping</li>
+                        <li>Liking vs. Relatability</li>
+                        <li>Pain vs. Confidence Mechanics</li>
+                        <li>Problem Chains & Agitation</li>
+                        <li>Urgency & Scarcity Frameworks</li>
+                        <li>Concise/Curiosity Triggers</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Avatar Architecture</h3>
+                    <ul>
+                        <li>The 28 core psychographic traits</li>
+                        <li>Demographic baseline</li>
+                        <li>Current state vs. desired outcome</li>
+                        <li>Fundamental worldview constraints</li>
+                    </ul>
+                </div>
+            </div>
+            <p><em>Database Retrieval:</em> Direct key-value lookups and structured knowledge graph (KG) querying for specific conditions triggered by the Avatar inputs.</p>
+        </div>
+
+        <div class="data-flow">↓</div>
+
+        <!-- LAYER 2 -->
+        <div class="layer-box layer-2">
+            <div class="layer-title">
+                Layer 2: The Judgment Layer
+                <span class="layer-badge">Reasoning & Strategy</span>
+            </div>
+            <p>The neuro-engine. This layer applies deep academic, psychological, and evolutionary theory to the raw data provided by Layer 1 to determine <em>how</em> to position the stimulus.</p>
+            <div class="grid-2">
+                <div>
+                    <h3>Human Sociality Engine</h3>
+                    <ul>
+                        <li>16 Levels of Evolutionary Psychology</li>
+                        <li>Neuroscience-backed cognitive biases</li>
+                        <li>Academic research on human behavior</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Chain of Thought Processing</h3>
+                    <ul>
+                        <li>Generates positioning hypotheses</li>
+                        <li>Analyzes: "How do we elicit action X from Avatar Y?"</li>
+                        <li>Synthesizes Layer 1 data into actionable strategies</li>
+                    </ul>
+                </div>
+            </div>
+            <p><em>Database Retrieval:</em> Semantic vector search (RAG) against the deep academic libraries to pull relevant psychological framing based on Layer 1's active conditions.</p>
+        </div>
+
+        <div class="data-flow">↓</div>
+
+        <!-- LAYER 3 -->
+        <div class="layer-box layer-3">
+            <div class="layer-title">
+                Layer 3: The Taste Layer
+                <span class="layer-badge">Nuance & Execution</span>
+            </div>
+            <p>The masterclass execution layer. This is where clinical strategy becomes compelling, nuanced marketing. It relies on a complex, node-based decision tree derived from expert transcripts.</p>
+            <div class="grid-2">
+                <div>
+                    <h3>Nuanced Decision Matrix</h3>
+                    <ul>
+                        <li>Derived from masterclass transcripts & expert breakdowns</li>
+                        <li>Node-based execution pathways (Micro-level decision trees)</li>
+                        <li>Sentence-level nuance and structural flow</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Execution & Outputs</h3>
+                    <ul>
+                        <li>Integration of Creator Brand Voice</li>
+                        <li>Funnel & Pathway specific mechanics</li>
+                        <li>Final generation of <strong>Marketing.md</strong> and <strong>Avatar_Internal.md</strong></li>
+                        <li>Direct prompt passing to the Writing Agent for Stimulus creation</li>
+                    </ul>
+                </div>
+            </div>
+            <p><em>Database Retrieval:</em> Graph-based traversal through expert decision nodes to determine the exact sequence of arguments and tonal shifts required for the final copy.</p>
+        </div>
+    </div>
+
+    <div class="glass-panel">
+        <h2>Data Flow & Optimization</h2>
+        <p>The primary engineering focus moving forward is the backend mechanics linking these layers:</p>
+        <ul>
+            <li><strong>Recursion:</strong> How effectively the system loops through Layer 2 to refine its judgment before passing to Layer 3.</li>
+            <li><strong>Data Pulling:</strong> The exact orchestration of how Layer 1 pulls from the KG vs. how Layer 2 pulls from Vector DBs.</li>
+            <li><strong>Classification:</strong> The weighting algorithms that decide which psychological condition is most dominant for the specific Avatar at this exact point in the funnel.</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
